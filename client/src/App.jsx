@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { MessageSquare, Upload, X, Briefcase, CheckCircle, Clock, MapPin, Search, Sparkles, Filter, ChevronRight } from 'lucide-react';
 
+// ➤ LIVE BACKEND URL
 const API_URL = 'https://job-tracker-full.onrender.com/api';
 
 export default function App() {
@@ -51,13 +52,29 @@ export default function App() {
     setTimeout(() => setPopupJob(job), 1000);
   };
 
+  // ➤ IMPROVED TRACKING FUNCTION
   const saveApplication = async (status) => {
-    if (status !== 'No') {
-      await axios.post(`${API_URL}/track`, {
-        jobId: popupJob.id, jobTitle: popupJob.title, company: popupJob.company, status: status === 'Earlier' ? 'Applied' : status
-      });
+    try {
+      if (status !== 'No') {
+        // 1. Send data to backend
+        await axios.post(`${API_URL}/track`, {
+          jobId: popupJob.id, 
+          jobTitle: popupJob.title, 
+          company: popupJob.company, 
+          status: status === 'Earlier' ? 'Applied' : status
+        });
+        
+        // 2. Success Feedback
+        alert("✅ Application Saved to Dashboard!");
+      }
+    } catch (err) {
+      console.error("Tracking Error:", err);
+      // 3. Error Feedback
+      alert("⚠️ Error saving application. Please check your connection.");
+    } finally {
+      // 4. ALWAYS close the modal
+      setPopupJob(null);
     }
-    setPopupJob(null);
   };
 
   const handleChat = async () => {
