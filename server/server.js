@@ -116,7 +116,10 @@ fastify.post('/api/chat', async (req) => {
   const result = await model.generateContent(prompt);
   return { reply: result.response.text() };
 });
-
+// Add a simple root route to confirm server is up
+fastify.get('/', async (request, reply) => {
+  return { status: "Active", message: "Job Tracker API is running!" };
+});
 // Start Server
 const start = async () => {
   try {

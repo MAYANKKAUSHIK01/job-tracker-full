@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { MessageSquare, Upload, X, Briefcase, CheckCircle, Clock, MapPin, Search, Sparkles, Filter, ChevronRight } from 'lucide-react';
 
-const API_URL = 'http://localhost:3001/api';
+const API_URL = 'https://job-tracker-full.onrender.com/api';
 
 export default function App() {
   const [jobs, setJobs] = useState([]);
